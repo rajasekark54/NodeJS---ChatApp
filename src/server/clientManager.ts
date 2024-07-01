@@ -1,6 +1,7 @@
 import { Socket } from 'net';
 import { Client, ClientNameIdMap } from './interface';
 import { generateClientId } from '../utils/index';
+import logger from '../utils/logger';
 
 export class ClientManager {
   private clients: Client;
@@ -30,11 +31,13 @@ export class ClientManager {
     };
 
     this.clientNameIdMap[clientName] = clientId;
+
+    logger.info(`Client ID: ${clientId}, ClientName: ${clientName}`);
     client.write(
-      `User created successfully. User ID: ${clientId}, Username: ${clientName}.`
+      `Client created successfully. Client ID: ${clientId}, ClientName: ${clientName}.`
     );
 
-    const message = `New user added to the chat: ${clientName}.`;
+    const message = `New client added to the chat: ${clientName}.`;
     this.send(client, message, 'all');
   }
 
@@ -71,7 +74,7 @@ export class ClientManager {
   }
 
   sendRecipients(senderId: string, message: string, recipients: string[]) {
-    const { client: sender, name } = this.clients[senderId];
+    const { client: sender, name: senderName } = this.clients[senderId];
 
     for (const name of recipients) {
       const clientId = this.clientNameIdMap[name];
@@ -80,7 +83,7 @@ export class ClientManager {
       if (client === sender) continue;
 
       const data = {
-        from: name,
+        from: senderName,
         message,
       };
 

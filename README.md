@@ -7,12 +7,44 @@ A chat application using the net library enables real-time text communication by
 - Real-time messaging between clients and server.
 - Client management on the server side.
 
+## Folder Structure
+
+<pre>
+.
+├── README.md
+├── package-lock.json
+├── package.json
+├── src
+│   ├── client
+│   │   ├── client.ts
+│   │   └── index.ts
+│   ├── server
+│   │   ├── clientManager.ts
+│   │   ├── index.ts
+│   │   ├── interface.ts
+│   │   └── server.ts
+│   └── utils
+│       ├── index.ts
+│       └── logger.ts
+└── tsconfig.json
+</pre>
+
+
 ## Installation
 
-To install and run the application locally, clone the repository and install dependencies:
+To get started with this repository, follow these steps:
 
-```bash
-git clone https://github.com/yourusername/chat-app.git
-cd chat-app
-npm install.
+1. Switch to the root directory of the repository.
+2. Run `npm install` to install dependencies.
+3. Run `npm run server` to run server.
+4. Open new terminal or tab and Run `npm run client` to run client 1.
+5. Open new terminal or tab and Run `npm run client` to run client 2.
+6. We can create n number of clients
+
+## Client Management and Messaging
+
+- Client Addition: When a new client joins, a unique ID and username are generated and assigned. Other clients are promptly notified of the new addition.
+- Messaging Flexibility: Clients can send messages to multiple recipients simultaneously or individually, facilitating versatile communication.
+Feel free to explore the code and tests to understand different data structures and algorithms.
+
 
