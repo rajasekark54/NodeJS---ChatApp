@@ -1,0 +1,25 @@
+{
+  "name": "chat_app",
+  "version": "1.0.0",
+  "description": "A chat application using the net library enables real-time text communication by establishing TCP connections between clients and a server. It ensures seamless message exchange and user interaction over a reliable network protocol",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "server": "npm run build && node dist/server/index",
+    "client": "node dist/client/index"
+  },
+  "keywords": [
+    "net",
+    "chat"
+  ],
+  "author": "Rajasekar Kannan",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "@types/winston": "^2.4.4",
+    "typescript": "^5.5.2"
+  },
+  "dependencies": {
+    "winston": "^3.13.0"
+  }
+}
