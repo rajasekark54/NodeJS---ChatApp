@@ -1,16 +1,19 @@
 import { Server as NetServer, Socket, createServer } from 'net';
 import { ClientManager } from './clientManager';
 import logger from '../utils/logger';
+import { AESCipher } from '../crypto/aes-chiper';
 
 export class Server {
   private port: number;
   private clientManager: ClientManager;
   private server: NetServer;
+  private aesCipher: AESCipher;
 
   constructor(port: number, clientManager: ClientManager) {
     this.port = port;
     this.clientManager = clientManager;
     this.server = createServer(this.handleConnection.bind(this));
+    this.aesCipher = new AESCipher();
   }
 
   private handleConnection(socket: Socket) {
@@ -24,7 +27,10 @@ export class Server {
   }
 
   private handleData(socket: Socket, data: Buffer) {
-    const dataProp = data.toString().split('|');
+    console.log(data.toString());
+    console.log(this.aesCipher.decrypt(data.toString()));
+
+    const dataProp = this.aesCipher.decrypt(data.toString()).split('|');
     const n = dataProp.length;
     const message = dataProp[n - 1];
     const recipient = n === 1 ? 'all' : dataProp[0];

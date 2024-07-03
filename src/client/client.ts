@@ -1,13 +1,16 @@
 import { createConnection, Socket } from 'net';
 import { createInterface } from 'readline';
 import logger from '../utils/logger';
+import { AESCipher } from '../crypto/aes-chiper';
 
 export class Client {
   private port: number;
   private client: Socket;
+  private aesCipher: AESCipher;
 
   constructor(port: number) {
     this.port = port;
+    this.aesCipher = new AESCipher();
     this.client = createConnection({ port: this.port }, () => this.onConnect());
     this.init();
   }
@@ -53,10 +56,11 @@ export class Client {
     );
     readline.prompt();
 
-    readline.on('line', (line) => {
-      console.log(`typed message: ${line}`);
+    readline.on('line', (data) => {
+      if (data === '') return;
+      console.log(`typed message: ${data}`);
 
-      this.client.write(line);
+      this.client.write(this.aesCipher.encrypt(data));
       readline.prompt();
     });
 
